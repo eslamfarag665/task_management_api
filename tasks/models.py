@@ -25,6 +25,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tasks')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    completed_at = models.DateTimeField(null=True, blank=True)
 
     def clean(self):
         if self.due_date and self.due_date < timezone.now().date():
@@ -32,3 +33,13 @@ class Task(models.Model):
 
     def __str__(self):
         return self.title
+    
+    def mark_as_completed(self):
+        self.status = 'COMPLETED'
+        self.completed_at = timezone.now()
+        self.save()
+
+    def mark_as_pending(self):
+        self.status = 'PENDING'
+        self.completed_at = None
+        self.save()
