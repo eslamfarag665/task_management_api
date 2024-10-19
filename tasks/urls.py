@@ -6,5 +6,5 @@ router = DefaultRouter()
 router.register(r'tasks', TaskViewSet, basename='task')
 
 urlpatterns = [
-    path('api/', include(router.urls)),  # تضمين مسار API لإدارة المهام
-]
+    path('', include(router.urls)),
+] 
